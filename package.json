@@ -1,0 +1,19 @@
+{
+  "name": "vue3-deep-selector-adapter",
+  "private": true,
+  "scripts": {
+    "build": "pnpm -r build",
+    "build:core": "pnpm --filter @vue3-deep-selector-adapter/core build",
+    "build:vite": "pnpm --filter @vue3-deep-selector-adapter/vite build",
+    "build:webpack": "pnpm --filter @vue3-deep-selector-adapter/webpack build",
+    "build:cli": "pnpm --filter @vue3-deep-selector-adapter/cli build",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.7.3",
+    "@types/node": "^22.7.4",
+    "typescript": "^5.6.2",
+    "unbuild": "^2.0.0"
+  }
+}
