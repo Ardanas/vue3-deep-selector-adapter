@@ -8,12 +8,18 @@
     "build:webpack": "pnpm --filter @vue3-deep-selector-adapter/webpack build",
     "build:cli": "pnpm --filter @vue3-deep-selector-adapter/cli build",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "test": "vitest",
+    "test:core": "vitest run --dir packages/core",
+    "test:vite": "vitest run --dir packages/vite",
+    "test:webpack": "vitest run --dir packages/webpack",
+    "test:cli": "vitest run --dir packages/cli"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.7.3",
     "@types/node": "^22.7.4",
     "typescript": "^5.6.2",
-    "unbuild": "^2.0.0"
+    "unbuild": "^2.0.0",
+    "vitest": "^0.34.6"
   }
 }

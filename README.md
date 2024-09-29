@@ -63,3 +63,20 @@ module.exports = {
   ]
 }
 ```
+
+## Testing
+
+To run all tests:
+
+```bash
+pnpm test
+```
+
+To run tests for a specific package:
+
+```bash
+pnpm test:core
+pnpm test:vite
+pnpm test:webpack
+pnpm test:cli
+```

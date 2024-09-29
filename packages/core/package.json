@@ -1,5 +1,6 @@
 {
   "name": "@vue3-deep-selector-adapter/core",
+  "type": "module",
   "version": "1.0.0",
   "exports": {
     ".": {
@@ -13,5 +14,9 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "unbuild"
+  },
+  "dependencies": {
+    "postcss": "^8.4.47",
+    "postcss-selector-parser": "^6.1.2"
   }
 }
