@@ -12,13 +12,18 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "bin": {
-    "vue3-deep-selector-adapter": "./dist/index.cjs"
+    "vue3-deep-selector-adapter": "./bin/index.js"
   },
   "scripts": {
     "build": "unbuild"
   },
   "dependencies": {
+    "@types/minimist": "^1.2.5",
     "@vue3-deep-selector-adapter/core": "workspace:*",
-    "glob": "^11.0.0"
+    "glob": "^11.0.0",
+    "minimist": "^1.2.8"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0"
   }
 }

@@ -1,27 +1,34 @@
 import fs from 'node:fs'
-import { argv, exit } from 'node:process'
+import { argv } from 'node:process'
 import { transformDeepSelector } from '@vue3-deep-selector-adapter/core'
 import glob from 'glob'
+import minimist from 'minimist'
 
-function transformFile(filePath: string) {
-  const content = fs.readFileSync(filePath, 'utf-8')
-  const transformedContent = transformDeepSelector(content)
-  fs.writeFileSync(filePath, transformedContent, 'utf-8')
-  console.log(`Transformed: ${filePath}`)
-}
+const argv2 = minimist(argv.slice(2))
 
-function main() {
-  const args = argv.slice(2)
-  const pattern = args[0] || '**/*.{vue,css,scss,less,styl}'
+const defaultExclude = ['node_modules/**', '.*']
+const include = argv2.include || argv2.i || '**/*.{vue,css,scss,less,styl}'
+const exclude = argv2.exclude || argv2.e || []
 
-  glob.glob(pattern, { ignore: 'node_modules/**' }).then((files) => {
-    // 处理文件
-    files.forEach(transformFile)
-    console.log('Transformation complete.')
-  }).catch((err) => {
-    console.error('错误:', err)
-    exit(1)
+function processFiles(pattern: string) {
+  const files = glob.sync(pattern, { ignore: [...defaultExclude, ...exclude] })
+
+  files.forEach((file) => {
+    const content = fs.readFileSync(file, 'utf-8')
+    const transformed = transformDeepSelector(content)
+
+    if (content !== transformed) {
+      fs.writeFileSync(file, transformed)
+      console.log(`Transformed: ${file}`)
+    }
   })
 }
 
-main()
+if (typeof include === 'string') {
+  processFiles(include)
+}
+else if (Array.isArray(include)) {
+  include.forEach(processFiles)
+}
+
+console.log('Deep selector transformation complete.')
