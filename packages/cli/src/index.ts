@@ -1,21 +1,24 @@
 import fs from 'node:fs'
+import path from 'node:path'
 import { argv } from 'node:process'
-import { transformDeepSelector } from '@vue3-deep-selector-adapter/core'
+import { transformDeepSelector, transformVueSfc } from '@vue3-deep-selector-adapter/core'
 import glob from 'glob'
 import minimist from 'minimist'
 
 const argv2 = minimist(argv.slice(2))
 
 const defaultExclude = ['node_modules/**', '.*']
-const include = argv2.include || argv2.i || '**/*.{vue,css,scss,less,styl}'
+const include = argv2.include || argv2.i || '**/*.{vue,css,scss,sass,less,styl}'
 const exclude = argv2.exclude || argv2.e || []
 
-function processFiles(pattern: string) {
-  const files = glob.sync(pattern, { ignore: [...defaultExclude, ...exclude] })
+function processFiles(patterns: string | string[], exclude: string | string[]) {
+  const e = Array.isArray(exclude) ? exclude : [exclude]
+  const files = glob.sync(patterns, { ignore: [...defaultExclude, ...e] })
 
   files.forEach((file) => {
     const content = fs.readFileSync(file, 'utf-8')
-    const transformed = transformDeepSelector(content)
+    const isVueSfc = path.extname(file) === '.vue'
+    const transformed = isVueSfc ? transformVueSfc(content) : transformDeepSelector(content)
 
     if (content !== transformed) {
       fs.writeFileSync(file, transformed)
@@ -24,11 +27,6 @@ function processFiles(pattern: string) {
   })
 }
 
-if (typeof include === 'string') {
-  processFiles(include)
-}
-else if (Array.isArray(include)) {
-  include.forEach(processFiles)
-}
+processFiles(include, exclude)
 
 console.log('Deep selector transformation complete.')

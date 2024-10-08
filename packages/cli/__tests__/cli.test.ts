@@ -3,7 +3,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-const cliPath = path.resolve(__dirname, '../bin/index.js')
+const cliPath = path.resolve(__dirname, '../bin/index.cjs')
 
 describe('cLI', () => {
   const testDir = path.join(__dirname, 'test-project')
@@ -13,8 +13,26 @@ describe('cLI', () => {
   beforeEach(() => {
     // 创建测试目录和文件
     fs.mkdirSync(testDir, { recursive: true })
-    fs.writeFileSync(testFile, '.foo >>> .bar { color: red; }')
-    fs.writeFileSync(excludeFile, '.foo >>> .bar { color: blue; }')
+    fs.writeFileSync(testFile, `
+      <template>
+        <div class="foo">
+          <span class="bar"></span>
+        </div>
+      </template>
+      <style>
+      .foo >>> .bar { color: red; }
+      </style>
+    `)
+    fs.writeFileSync(excludeFile, `
+      <template>
+        <div class="foo">
+          <span class="bar"></span>
+        </div>
+      </template>
+      <style>
+      .foo >>> .bar { color: blue; }
+      </style>
+    `)
   })
 
   afterEach(() => {
@@ -44,7 +62,7 @@ describe('cLI', () => {
   it('should handle multiple include patterns', () => {
     fs.writeFileSync(path.join(testDir, 'test.css'), '.foo >>> .bar { color: green; }')
 
-    execSync(`node ${cliPath} --include "${testDir}/**/*.vue" "${testDir}/**/*.css"`, { encoding: 'utf-8' })
+    execSync(`node ${cliPath} --include "${testDir}/**/*.vue" --include "${testDir}/**/*.css"`, { encoding: 'utf-8' })
 
     const vueContent = fs.readFileSync(testFile, 'utf-8')
     expect(vueContent).toContain('.foo :deep(.bar)')
@@ -54,8 +72,17 @@ describe('cLI', () => {
   })
 
   it('should not transform files when no changes are needed', () => {
-    fs.writeFileSync(testFile, '.foo :deep(.bar) { color: red; }')
-    const originalContent = fs.readFileSync(testFile, 'utf-8')
+    const originalContent = `
+      <template>
+        <div class="foo">
+          <span class="bar"></span>
+        </div>
+      </template>
+      <style>
+      .foo :deep(.bar) { color: red; }
+      </style>
+    `
+    fs.writeFileSync(testFile, originalContent)
 
     execSync(`node ${cliPath} --include "${testDir}/**/*.vue"`, { encoding: 'utf-8' })
 
