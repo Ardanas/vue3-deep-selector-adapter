@@ -1,3 +1,4 @@
+import { parse } from '@vue/compiler-sfc'
 import postcss from 'postcss'
 import selectorParser from 'postcss-selector-parser'
 
@@ -12,7 +13,6 @@ function getNextNode(node: selectorParser.Node) {
 function replaceDeepCombinator(combinator: selectorParser.Node, next: selectorParser.Node | undefined, isNeedSpace: boolean = true) {
   if (next) {
     const deepPseudo = selectorParser.pseudo({ value: isNeedSpace ? ' :deep' : ':deep' })
-    // const selector = selectorParser.selector({ nodes: undefined })
     deepPseudo.append(next.clone() as selectorParser.Selector)
     combinator.replaceWith(deepPseudo)
     next.remove()
@@ -40,9 +40,6 @@ export function transformDeepSelector(code: string): string {
             if (pseudo.value === '::v-deep') {
               const next = getNextNode(pseudo)
               if (next) {
-                // const isNeedSpace = !!pseudo.prev()?.toString().startsWith(' ')
-                // console.log('isSpace', isNeedSpace)
-
                 replaceDeepCombinator(pseudo, next, false)
               }
             }
@@ -51,4 +48,17 @@ export function transformDeepSelector(code: string): string {
       })
     },
   ]).process(code, { from: undefined }).css
+}
+
+export function transformVueSfc(code: string): string {
+  const { descriptor } = parse(code)
+
+  if (descriptor.styles.length > 0) {
+    descriptor.styles.forEach((style) => {
+      const transformedContent = transformDeepSelector(style.content)
+      code = code.replace(style.content, transformedContent)
+    })
+  }
+
+  return code
 }
