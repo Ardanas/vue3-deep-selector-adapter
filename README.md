@@ -2,29 +2,22 @@
 
 [中文版](./README.zh-CN.md)
 
-Vue 3 Deep Selector Adapter is a tool designed to help migrate Vue 2 deep selectors to Vue 3 compatible syntax. It supports various build tools and can be used as a CLI tool, Vite plugin, or Webpack plugin.
+Vue 3 Deep Selector Adapter is a tool designed to help migrate Vue 2 deep selectors to Vue 3 compatible syntax. It supports various build tools and can be used as a CLI tool.
 
 ## Features
 
 - Converts Vue 2 deep selectors (>>>, /deep/, ::v-deep) to Vue 3 :deep() syntax
 - Supports .vue, .css, .scss, .less, and .styl files
-- Available as a CLI tool, Vite plugin, and Webpack plugin
+- Available as a CLI tool
+
 
 ## Installation
 
 You can install the Vue 3 Deep Selector Adapter packages using npm, yarn, or pnpm.
 
 ### Using pnpm
-
 ```bash
-# for cli
 pnpm add @vue3-deep-selector-adapter/cli -g
-
-# for vite
-pnpm add -D @vue3-deep-selector-adapter/vite
-
-# for webpack
-pnpm add -D @vue3-deep-selector-adapter/webpack
 ```
 
 ## Usage
@@ -32,37 +25,16 @@ pnpm add -D @vue3-deep-selector-adapter/webpack
 ### CLI
 
 ```bash
-npx vue3-deep-selector-adapter ".{vue,css,scss,less,styl}"
+npx vue3-deep-selector-adapter --include ".{vue,css,scss,sass,less,styl}" --exclude "node_modules/**"
 ```
+#### Options
 
-### Vite Plugin
+- `--include` or `-i`: Specify files to include (can be used multiple times)
+  - Default: `"**/*.{vue,css,scss,sass,less,styl}"`
+- `--exclude` or `-e`: Specify files to exclude (can be used multiple times)
+  - Default: `[]` (no files excluded by default, except `node_modules/**` and `.*`)
 
-```javascript
-import vue from '@vitejs/plugin-vue'
-import vueDeepSelectorAdapter from '@vue3-deep-selector-adapter/vite'
-// vite.config.js
-import { defineConfig } from 'vite'
-
-export default defineConfig({
-  plugins: [
-    vue(),
-    vueDeepSelectorAdapter()
-  ]
-})
-```
-
-### Webpack Plugin
-
-```javascript
-// webpack.config.js
-const VueDeepSelectorAdapterPlugin = require('@vue3-deep-selector-adapter/webpack').default
-
-module.exports = {
-  plugins: [
-    new VueDeepSelectorAdapterPlugin()
-  ]
-}
-```
+If no options are provided, the tool will process all supported file types in the current directory and its subdirectories, excluding `node_modules` and hidden files.
 
 ## Testing
 
@@ -70,13 +42,4 @@ To run all tests:
 
 ```bash
 pnpm test
-```
-
-To run tests for a specific package:
-
-```bash
-pnpm test:core
-pnpm test:vite
-pnpm test:webpack
-pnpm test:cli
 ```
