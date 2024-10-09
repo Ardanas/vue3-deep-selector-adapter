@@ -2,13 +2,12 @@
 
 [中文版](./README.zh-CN.md)
 
-Vue 3 Deep Selector Adapter is a tool designed to help migrate Vue 2 deep selectors to Vue 3 compatible syntax. It supports various build tools and can be used as a CLI tool.
+Vue 3 Deep Selector Adapter is a tool designed to help migrate Vue 2 deep selectors to Vue 3 compatible syntax.
 
 ## Features
 
 - Converts Vue 2 deep selectors (>>>, /deep/, ::v-deep) to Vue 3 :deep() syntax
-- Supports .vue, .css, .scss, .less, and .styl files
-- Available as a CLI tool
+- Supports .vue, .css, .scss, .sass, .less, and .styl files
 
 ## Installation
 
