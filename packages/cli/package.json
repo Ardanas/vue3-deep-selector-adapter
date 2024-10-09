@@ -1,5 +1,5 @@
 {
-  "name": "@vue3-deep-selector-adapter/cli",
+  "name": "@v3-deep-adapter/cli",
   "type": "module",
   "version": "1.0.0",
   "exports": {
@@ -11,13 +11,13 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "bin": {
-    "vue3-deep-selector-adapter": "./bin/index.cjs"
+    "v3-deep-adapter": "./bin/index.cjs"
   },
   "scripts": {
     "build": "unbuild"
   },
   "dependencies": {
-    "@vue3-deep-selector-adapter/core": "workspace:*",
+    "@v3-deep-adapter/core": "workspace:*",
     "glob": "^11.0.0",
     "minimist": "^1.2.8"
   },

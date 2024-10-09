@@ -17,7 +17,7 @@ Vue 3 深度选择器适配器是一个工具,旨在帮助将 Vue 2 的深度选
 ### 使用 pnpm
 
 ```bash
-pnpm add @vue3-deep-selector-adapter/cli -g
+pnpm add @v3-selector-adapter/cli -g
 ```
 
 ## 用例
@@ -25,7 +25,7 @@ pnpm add @vue3-deep-selector-adapter/cli -g
 ### CLI
 
 ```bash
-npx vue3-deep-selector-adapter --include ".{vue,css,scss,sass,less,styl}" --exclude "node_modules/**"
+npx v3-deep-adapter --include ".{vue,css,scss,sass,less,styl}" --exclude "node_modules/**"
 ```
 
 #### 选项

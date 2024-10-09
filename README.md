@@ -10,14 +10,13 @@ Vue 3 Deep Selector Adapter is a tool designed to help migrate Vue 2 deep select
 - Supports .vue, .css, .scss, .less, and .styl files
 - Available as a CLI tool
 
-
 ## Installation
 
 You can install the Vue 3 Deep Selector Adapter packages using npm, yarn, or pnpm.
 
 ### Using pnpm
 ```bash
-pnpm add @vue3-deep-selector-adapter/cli -g
+pnpm add @v3-deep-adapter/cli -g
 ```
 
 ## Usage
@@ -25,7 +24,7 @@ pnpm add @vue3-deep-selector-adapter/cli -g
 ### CLI
 
 ```bash
-npx vue3-deep-selector-adapter --include ".{vue,css,scss,sass,less,styl}" --exclude "node_modules/**"
+npx v3-deep-adapter --include ".{vue,css,scss,sass,less,styl}" --exclude "node_modules/**"
 ```
 #### Options
 

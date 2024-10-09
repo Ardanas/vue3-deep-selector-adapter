@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { argv } from 'node:process'
-import { transformDeepSelector, transformVueSfc } from '@vue3-deep-selector-adapter/core'
+import { transformDeepSelector, transformVueSfc } from '@v3-deep-adapter/core'
 import glob from 'glob'
 import minimist from 'minimist'
 

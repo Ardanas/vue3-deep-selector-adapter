@@ -1,5 +1,5 @@
 {
-  "name": "@vue3-deep-selector-adapter/core",
+  "name": "@v3-deep-adapter/core",
   "type": "module",
   "version": "1.0.0",
   "exports": {

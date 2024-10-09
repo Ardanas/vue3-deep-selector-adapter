@@ -1,10 +1,10 @@
 {
-  "name": "vue3-deep-selector-adapter",
+  "name": "v3-deep-adapter",
   "private": true,
   "scripts": {
     "build": "pnpm -r build",
-    "build:core": "pnpm --filter @vue3-deep-selector-adapter/core build",
-    "build:cli": "pnpm --filter @vue3-deep-selector-adapter/cli build",
+    "build:core": "pnpm --filter @v3-deep-adapter/core build",
+    "build:cli": "pnpm --filter @v3-deep-adapter/cli build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "vitest"
