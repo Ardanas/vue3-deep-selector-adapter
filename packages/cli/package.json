@@ -1,7 +1,7 @@
 {
   "name": "@v3-deep-adapter/cli",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
@@ -24,5 +24,8 @@
   "devDependencies": {
     "@types/glob": "^8.1.0",
     "@types/minimist": "^1.2.5"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
