@@ -7,10 +7,14 @@
     "build:cli": "pnpm --filter @v3-deep-adapter/cli build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "vitest"
+    "test": "vitest",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "publish": "pnpm build && changeset publish"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.7.3",
+    "@changesets/cli": "^2.27.9",
     "@types/node": "^22.7.4",
     "typescript": "^5.6.2",
     "unbuild": "^2.0.0",
