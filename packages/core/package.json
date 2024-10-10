@@ -16,9 +16,7 @@
     "build": "unbuild"
   },
   "dependencies": {
-    "@vue/compiler-sfc": "^3.5.11",
-    "postcss": "^8.4.47",
-    "postcss-selector-parser": "^6.1.2"
+    "@vue/compiler-sfc": "^3.5.11"
   },
   "publishConfig": {
     "access": "public"
