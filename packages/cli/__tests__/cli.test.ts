@@ -19,7 +19,7 @@ describe('cLI', () => {
           <span class="bar"></span>
         </div>
       </template>
-      <style>
+      <style scoped>
       .foo >>> .bar { color: red; }
       </style>
     `)
@@ -29,7 +29,7 @@ describe('cLI', () => {
           <span class="bar"></span>
         </div>
       </template>
-      <style>
+      <style scoped>
       .foo >>> .bar { color: blue; }
       </style>
     `)
