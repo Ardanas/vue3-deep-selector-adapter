@@ -6,7 +6,7 @@ function transformDeepSelector(code: string): string {
   code = code.replace(/\/deep\//g, '::v-deep')
 
   // ::v-deep(.selector)
-  code = code.replace(/(.+?)\s*::v-deep\s*\(/g, '$1 :deep(')
+  code = code.replace(/::v-deep\s*\(/g, ':deep(')
 
   // ::v-deep .selector and ::v-deep.selector
   code = code.replace(/(.+?\s*)::v-deep\s*([^\s{,]+(?:\s*[>+~]\s*[^\s{,]+)*)/g, (_, before, selector) => {
@@ -14,7 +14,7 @@ function transformDeepSelector(code: string): string {
   })
 
   // ::v-deep {} or ::v-deep{}
-  code = code.replace(/(.+?)\s*::v-deep(\s*\{)/g, '$1 :deep()$2')
+  code = code.replace(/::v-deep(\s*\{)/g, ':deep()$1')
 
   return code
 }

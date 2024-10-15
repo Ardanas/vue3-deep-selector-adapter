@@ -1,5 +1,19 @@
-import { describe, expect, it } from 'vitest'
+import fs from 'node:fs'
+import path from 'node:path'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { transformDeepSelector, transformVueSfc } from '../src/index'
+
+const testDir = path.join(__dirname, 'test-files')
+
+beforeEach(() => {
+  if (!fs.existsSync(testDir)) {
+    fs.mkdirSync(testDir, { recursive: true })
+  }
+})
+
+afterEach(() => {
+  fs.rmSync(testDir, { recursive: true, force: true })
+})
 
 describe('transformDeepSelector', () => {
   it('>>> to :deep()', () => {
@@ -141,44 +155,55 @@ describe('transformDeepSelector', () => {
 
 describe('vue sfc', () => {
   it('should transform selectors in .vue files', () => {
-    const input = `
-                <template>
-                    <div class="foo">
-                        <span class="bar"></span>
-                    </div>
-                </template>
+    const vueFilePath = path.join(testDir, 'test.vue')
+    const vueContent = `
+      <template>
+        <div class="foo">
+          <span class="bar"></span>
+        </div>
+      </template>
 
-                <style scoped>
-                    .foo >>> .bar {
-                        color: red;
-                    }
-                </style>
-            `
-    expect(transformVueSfc(input)).toContain('.foo :deep(.bar)')
+      <style scoped>
+        .foo >>> .bar {
+          color: red;
+        }
+      </style>
+    `
+    fs.writeFileSync(vueFilePath, vueContent)
+
+    const content = fs.readFileSync(vueFilePath, 'utf-8')
+    const transformedContent = transformVueSfc(content)
+
+    expect(transformedContent).toContain('.foo :deep(.bar)')
   })
 
   it('should transform selectors in .vue files with multiple style tags', () => {
-    const input = `
-                <template>
-                    <div class="foo">
-                        <span class="bar"></span>
-                    </div>
-                </template>
+    const vueFilePath = path.join(testDir, 'test-multiple-styles.vue')
+    const vueContent = `
+      <template>
+        <div class="foo">
+          <span class="bar"></span>
+        </div>
+      </template>
 
-                <style scoped>
-                    .foo >>> .bar {
-                        color: red;
-                    }
-                </style>
+      <style scoped>
+        .foo >>> .bar {
+          color: red;
+        }
+      </style>
 
-                <style scoped>
-                    .baz /deep/ .qux {
-                        background: blue;
-                    }
-                </style>
-            `
-    const result = transformVueSfc(input)
-    expect(result).toContain('.foo :deep(.bar) {')
-    expect(result).toContain('.baz :deep(.qux) {')
+      <style scoped>
+        .baz /deep/ .qux {
+          background: blue;
+        }
+      </style>
+    `
+    fs.writeFileSync(vueFilePath, vueContent)
+
+    const content = fs.readFileSync(vueFilePath, 'utf-8')
+    const transformedContent = transformVueSfc(content)
+
+    expect(transformedContent).toContain('.foo :deep(.bar)')
+    expect(transformedContent).toContain('.baz :deep(.qux)')
   })
 })
